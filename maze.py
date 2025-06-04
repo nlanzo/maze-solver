@@ -48,7 +48,7 @@ class Maze():
         if self.__window is None:
             return
         self.__window.redraw()
-        sleep(0.02)
+        sleep(0.04)
 
     def __break_entrance_and_exit(self):
         self.__cells[0][0].has_top_wall = False
@@ -104,3 +104,52 @@ class Maze():
         for col in self.__cells:
             for cell in col:
                 cell.visited = False
+
+    def solve(self):
+        return self.__solve_r(0, 0)
+    
+    def __solve_r(self, i, j):
+        self.__animate()
+        current_cell = self.__cells[i][j]
+        current_cell.visited = True
+
+        if i == self.__num_cols - 1 and j == self.__num_rows - 1:
+            return True
+        
+        # check left
+        if i > 0 and not current_cell.has_left_wall and not self.__cells[i - 1][j].visited:
+            next_cell = self.__cells[i - 1][j]
+            current_cell.draw_move(next_cell)
+            if self.__solve_r(i - 1, j):
+                return True
+            else:
+                current_cell.draw_move(next_cell, undo=True)
+        
+        # check up
+        if j > 0 and not current_cell.has_top_wall and not self.__cells[i][j - 1].visited:
+            next_cell = self.__cells[i][j - 1]
+            current_cell.draw_move(next_cell)
+            if self.__solve_r(i, j - 1):
+                return True
+            else:
+                current_cell.draw_move(next_cell, undo=True)
+
+        # check right
+        if i < self.__num_cols - 1 and not current_cell.has_right_wall and not self.__cells[i + 1][j].visited:
+            next_cell = self.__cells[i + 1][j]
+            current_cell.draw_move(next_cell)
+            if self.__solve_r(i + 1, j):
+                return True
+            else:
+                current_cell.draw_move(next_cell, undo=True)
+
+        # check down
+        if j < self.__num_rows - 1 and not current_cell.has_bottom_wall and not self.__cells[i][j + 1].visited:
+            next_cell = self.__cells[i][j + 1]
+            current_cell.draw_move(next_cell)
+            if self.__solve_r(i, j + 1):
+                return True
+            else:
+                current_cell.draw_move(next_cell, undo=True)
+
+        return False
