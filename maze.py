@@ -22,6 +22,7 @@ class Maze():
 
 
 
+
     def __create_cells(self):
         for i in range(self.__num_cols):
             column = []
@@ -80,30 +81,21 @@ class Maze():
 
             # go right
             if next_to_visit[0] == i + 1:
-                print(f"Breaking right wall of cell {i}, {j}")
                 self.__cells[i][j].has_right_wall = False
-                print(f"Breaking left wall of cell {i + 1}, {j}")
                 self.__cells[i + 1][j].has_left_wall = False
             # go down
             if next_to_visit[1] == j + 1:
-                print(f"Breaking bottom wall of cell {i}, {j}")
                 self.__cells[i][j].has_bottom_wall = False
-                print(f"Breaking top wall of cell {i}, {j + 1}")
                 self.__cells[i][j + 1].has_top_wall = False
             # go left
             if next_to_visit[0] == i - 1:
-                print(f"Breaking left wall of cell {i}, {j}")
                 self.__cells[i][j].has_left_wall = False
-                print(f"Breaking right wall of cell {i - 1}, {j}")
                 self.__cells[i - 1][j].has_right_wall = False
             # go up
             if next_to_visit[1] == j - 1:
-                print(f"Breaking top wall of cell {i}, {j}")
                 self.__cells[i][j].has_top_wall = False
-                print(f"Breaking bottom wall of cell {i}, {j - 1}")
                 self.__cells[i][j - 1].has_bottom_wall = False
 
 
             self.__break_walls_r(next_to_visit[0], next_to_visit[1])
             
-

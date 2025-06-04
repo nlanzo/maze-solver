@@ -30,13 +30,13 @@ class Cell():
             self.__y2 = y1
 
         
-        left_wall = Line(Point(x1, y1), Point(x2, y1))
+        left_wall = Line(Point(x1, y1), Point(x1, y2))
         if self.has_left_wall:
             self.__win.draw_line(left_wall)
         else:
             self.__win.draw_line(left_wall, "white")
             
-        top_wall = Line(Point(x1, y1), Point(x1, y2))
+        top_wall = Line(Point(x1, y1), Point(x2, y1))
         if self.has_top_wall:
             self.__win.draw_line(top_wall)
         else:
